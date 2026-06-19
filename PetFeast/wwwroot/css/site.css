@@ -1,0 +1,33 @@
+body {
+    background: white;
+}
+
+.logo-link {
+    text-decoration: none;
+    font-size: 32px;
+    font-weight: 700;
+    color: #dc3545;
+}
+
+.hero {
+    height: 600px;
+    background: url('/images/banner.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .hero h1,
+    .hero p {
+        color: white;
+    }
+
+.card {
+    transition: .3s;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+    }

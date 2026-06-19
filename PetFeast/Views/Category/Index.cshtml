@@ -1,0 +1,45 @@
+﻿@model IEnumerable<PetFeast.Models.Products.Category>
+
+<div class="container mt-5">
+
+    <h2>Danh sách danh mục</h2>
+
+    <a asp-action="Create"
+       class="btn btn-danger mb-3">
+
+        Thêm danh mục
+
+    </a>
+
+    <table class="table table-bordered">
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Tên danh mục</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.CategoryId</td>
+
+                    <td>@item.CategoryName</td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

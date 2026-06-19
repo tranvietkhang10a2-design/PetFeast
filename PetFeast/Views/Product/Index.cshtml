@@ -1,0 +1,21 @@
+﻿@model IEnumerable<PetFeast.Models.Products.Product>
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between">
+
+        <h2>Sản phẩm</h2>
+
+        <a asp-action="Create"
+           class="btn btn-danger">
+
+            Thêm sản phẩm
+
+        </a>
+
+    </div>
+
+    <partial name="_Product"
+             model="Model" />
+
+</div>

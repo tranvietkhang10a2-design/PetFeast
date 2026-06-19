@@ -1,0 +1,93 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item dropdown">
+
+        <a class="nav-link dropdown-toggle text-dark"
+           href="#"
+           data-bs-toggle="dropdown">
+
+            <i class="bi bi-person-circle fs-4"></i>
+
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end">
+
+            <li>
+
+                <a class="dropdown-item"
+                   asp-controller="Orders"
+                   asp-action="UserOrderList">
+
+                    Đơn hàng của tôi
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a class="dropdown-item"
+                   asp-area="Identity"
+                   asp-page="/Account/Logout">
+
+                    Đăng xuất
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </li>
+}
+else
+{
+    <li class="nav-item dropdown">
+
+        <a class="nav-link dropdown-toggle text-dark"
+           href="#"
+           data-bs-toggle="dropdown">
+
+            <i class="bi bi-person-circle fs-4"></i>
+
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end">
+
+            <li>
+
+                <a class="dropdown-item"
+                   asp-area="Identity"
+                   asp-page="/Account/Register">
+
+                    Đăng ký
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a class="dropdown-item"
+                   asp-area="Identity"
+                   asp-page="/Account/Login">
+
+                    Đăng nhập
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </li>
+}
