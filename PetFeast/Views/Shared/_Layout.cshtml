@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
 
@@ -13,6 +12,9 @@
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+
     <link rel="stylesheet" href="~/css/site.css" />
 
 </head>
@@ -24,25 +26,28 @@
 
         <div class="container">
 
-            <div class="row py-3 align-items-center">
+            <div class="row header-row">
 
                 <!-- LOGO -->
-                <div class="col-lg-2">
+                <div class="col-lg-3">
 
                     <a asp-controller="Home"
                        asp-action="Index"
                        class="logo-link">
 
-                        PETFEAST
+                        <img src="~/img/Logo/logo.png"
+                             alt="PetFeast Logo"
+                             class="logo-img">
 
                     </a>
 
                 </div>
 
-                <!-- SEARCH -->
-                <div class="col-lg-7">
 
-                    <form>
+                <!-- SEARCH -->
+                <div class="col-lg-6">
+
+                    <form class="w-100 header-search">
 
                         <div class="input-group">
 
@@ -50,7 +55,7 @@
                                    class="form-control"
                                    placeholder="Tìm kiếm sản phẩm..." />
 
-                            <button class="btn btn-danger">
+                            <button class="btn btn-primary">
 
                                 Tìm kiếm
 
@@ -62,47 +67,59 @@
 
                 </div>
 
+
                 <!-- ACCOUNT + CART -->
                 <div class="col-lg-3">
 
-                    <ul class="navbar-nav flex-row justify-content-end align-items-center">
+                    <ul class="navbar-nav flex-row justify-content-end align-items-center w-100">
+
 
                         <li class="nav-item">
-                            <a class="nav-link">Login</a>
-                        </li>
 
-                        <li class="nav-item ms-3">
+                            <a class="nav-link text-dark btn-login">
 
-                            <a asp-controller="ShoppingCart"
-                               asp-action="Index"
-                               class="btn btn-danger">
-
-                                <i class="bi bi-cart3"></i>
-
-                                (0)
+                                Login
 
                             </a>
 
                         </li>
 
+
+                        <li class="nav-item ms-3">
+
+                            <a asp-controller="ShoppingCart"
+                               asp-action="Index"
+                               class="btn btn-primary cart-icon">
+
+                                <i class="bi bi-cart3"></i>
+
+                                <span>(0)</span>
+
+                            </a>
+
+                        </li>
+
+
                     </ul>
 
                 </div>
+
 
             </div>
 
         </div>
 
     </header>
-
     <!-- MENU -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 
         <div class="container">
 
             <ul class="navbar-nav">
 
+                <!-- Trang chủ -->
                 <li class="nav-item">
+
                     <a class="nav-link"
                        asp-controller="Home"
                        asp-action="Index">
@@ -110,29 +127,86 @@
                         Trang chủ
 
                     </a>
+
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link"
-                       asp-controller="Product"
-                       asp-action="Index">
+                <!-- Sản phẩm Dropdown -->
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
 
                         Sản phẩm
 
                     </a>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Product"
+                               asp-action="Index">
+
+                                Tất cả sản phẩm
+
+                            </a>
+                        </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Product"
+                               asp-action="Index"
+                               asp-route-categoryId="1">Thức ăn chó
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Product"
+                               asp-action="Index"
+                               asp-route-categoryId="2">Thức ăn mèo
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Product"
+                               asp-action="Index"
+                               asp-route-categoryId="3">Snack & Bánh thưởng</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Product"
+                               asp-action="Index"
+                               asp-route-categoryId="4">Đồ chơi</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               asp-controller="Product"
+                               asp-action="Index"
+                               asp-route-categoryId="5">Phụ kiện</a>
+                        </li>
+                    </ul>
                 </li>
 
+                <!-- Khuyến mãi -->
                 <li class="nav-item">
-                    <a class="nav-link"
-                       asp-controller="Category"
-                       asp-action="Index">
 
-                        Danh mục
+                    <a class="nav-link"
+                       asp-controller="Home"
+                       asp-action="Promotion">
+
+                        Khuyến mãi
 
                     </a>
+
                 </li>
 
+                <!-- Liên hệ -->
                 <li class="nav-item">
+
                     <a class="nav-link"
                        asp-controller="Contact"
                        asp-action="Index">
@@ -140,6 +214,7 @@
                         Liên hệ
 
                     </a>
+
                 </li>
 
             </ul>
@@ -148,24 +223,278 @@
 
     </nav>
 
-    @RenderBody()
+    <!-- BODY -->
+    <main>
 
-    <!-- FOOTER -->
-    <footer class="bg-danger text-white text-center py-4 mt-5">
+        @RenderBody()
+
+    </main>
+
+    <!-- SERVICE SECTION -->
+    <section class="pet-service">
 
         <div class="container">
 
-            <p class="mb-0">
+            <div class="row text-center justify-content-center">
 
-                © 2026 PetFeast - All Rights Reserved
 
-            </p>
+                <!-- Giao hỏa tốc -->
+                <div class="col-md-4 service-item">
+
+                    <div class="service-icon">
+
+                        <i class="bi bi-truck"></i>
+
+                    </div>
+
+                    <h5>
+                        Giao hỏa tốc 2H
+                    </h5>
+
+                    <p>
+                        Nội thành Đà Lạt
+                    </p>
+
+                </div>
+
+
+                <!-- Freeship -->
+                <div class="col-md-4 service-item">
+
+                    <div class="service-icon">
+
+                        <i class="bi bi-box-seam"></i>
+
+                    </div>
+
+
+                    <h5>
+                        Freeship toàn quốc
+                    </h5>
+
+                    <p>
+                        Cho đơn hàng từ 199.000đ
+                    </p>
+
+                </div>
+
+
+
+                <!-- Đổi trả -->
+                <div class="col-md-4 service-item">
+
+                    <div class="service-icon">
+
+                        <i class="bi bi-arrow-repeat"></i>
+
+                    </div>
+
+
+                    <h5>
+                        Đổi trả miễn phí
+                    </h5>
+
+                    <p>
+                        Trong vòng 7 ngày
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer>
+
+        <div class="footer-top-bar"></div>
+
+        <div class="footer-content">
+
+            <div class="container">
+
+                <div class="row justify-content-center text-center">
+
+                    <div class="col-lg-3 col-md-6 mb-4">
+
+                        <h2 class="footer-logo">
+                            PETFEAST
+                        </h2>
+
+                        <p>
+                            Thức ăn và phụ kiện chất lượng dành cho thú cưng.
+                        </p>
+
+                        <div class="social-icons">
+
+                            <a href="#">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+
+                            <a href="#">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+
+                            <a href="#">
+                                <i class="bi bi-tiktok"></i>
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 mb-4">
+
+                        <h5>Liên hệ</h5>
+
+                        <p>📞 0901 234 567</p>
+
+                        <p>✉ petfeast@gmail.com</p>
+
+                        <p>📍 Đà Lạt, Lâm Đồng</p>
+
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 mb-4">
+
+                        <h5>Hỗ trợ</h5>
+
+                        <ul class="footer-links">
+
+                            <li><a href="#">Hướng dẫn mua hàng</a></li>
+
+                            <li><a href="#">Chính sách giao hàng</a></li>
+
+                            <li><a href="#">Chính sách đổi trả</a></li>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="col-lg-3 col-md-6 mb-4">
+
+                        <h5>Chính sách</h5>
+
+                        <ul class="footer-links">
+
+                            <li><a href="#">Điều khoản sử dụng</a></li>
+
+                            <li><a href="#">Bảo mật thông tin</a></li>
+
+                            <li><a href="#">Liên hệ</a></li>
+
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            © 2026 PetFeast - All Rights Reserved
 
         </div>
 
     </footer>
 
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+                       function scrollSlider(id, direction) {
+
+            const slider = document.getElementById(id);
+
+            const card = slider.querySelector('.product-item');
+
+            if (!card) return;
+
+
+            const distance = (card.offsetWidth + 20) * direction;
+
+            const start = slider.scrollLeft;
+
+            const end = start + distance;
+
+            const duration = 600; // thời gian trượt (ms)
+
+            let startTime = null;
+
+
+            function animation(currentTime) {
+
+                if (!startTime)
+                    startTime = currentTime;
+
+
+                const progress = Math.min(
+                    (currentTime - startTime) / duration,
+                    1
+                );
+
+
+                // easing mượt
+                const ease =
+                    1 - Math.pow(1 - progress, 3);
+
+
+                slider.scrollLeft =
+                    start + (end - start) * ease;
+
+
+                if (progress < 1) {
+
+                    requestAnimationFrame(animation);
+
+                }
+
+            }
+
+
+            requestAnimationFrame(animation);
+
+        }
+
+        window.addEventListener('load', function () {
+
+            document.querySelectorAll('.product-scroll').forEach(slider => {
+
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+
+                slider.addEventListener('mousedown', e => {
+
+                    isDown = true;
+                    startX = e.pageX - slider.offsetLeft;
+                    scrollLeft = slider.scrollLeft;
+
+                });
+
+                slider.addEventListener('mouseleave', () => isDown = false);
+                slider.addEventListener('mouseup', () => isDown = false);
+
+                slider.addEventListener('mousemove', e => {
+
+                    if (!isDown) return;
+
+                    e.preventDefault();
+
+                    const x = e.pageX - slider.offsetLeft;
+                    const walk = (x - startX) * 2;
+
+                    slider.scrollLeft = scrollLeft - walk;
+
+                });
+
+            });
+
+        });
+    </script>
 
     @await RenderSectionAsync("Scripts", false)
 

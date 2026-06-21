@@ -25,6 +25,16 @@ namespace PetFeast.Controllers
             return View(products);
         }
 
+        public IActionResult Detail(int id)
+        {
+            var product = _productRepo.GetById(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
         public IActionResult Create()
         {
             ViewBag.Categories =

@@ -1,33 +1,33 @@
-﻿@model PetFeast.Models.Products.Category
+﻿@model IEnumerable<PetFeast.Models.Products.Product>
 
-<div class="container mt-5">
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 mb-4">
 
-    <h2>Thêm danh mục</h2>
+            <div class="card h-100 shadow-sm">
 
-    <form asp-action="Create">
+                <img src="@item.ImageUrl"
+                     class="card-img-top"
+                     style="height:250px;object-fit:cover;">
 
-        <div class="mb-3">
+                <div class="card-body">
 
-            <label asp-for="CategoryName"
-                   class="form-label">
-            </label>
+                    <h5>@item.ProductName</h5>
 
-            <input asp-for="CategoryName"
-                   class="form-control" />
+                    <p class="text-danger fw-bold">
+                        @item.Price.ToString("N0") đ
+                    </p>
+                    <a asp-controller="Product"
+                       asp-action="Detail"
+                       asp-route-id="@item.ProductId"
+                       class="btn btn-primary">
+                        Xem chi tiết
+                    </a>
+                </div>
 
-            <span asp-validation-for="CategoryName"
-                  class="text-danger">
-            </span>
+            </div>
 
         </div>
-
-        <button type="submit"
-                class="btn btn-danger">
-
-            Thêm
-
-        </button>
-
-    </form>
-
+    }
 </div>

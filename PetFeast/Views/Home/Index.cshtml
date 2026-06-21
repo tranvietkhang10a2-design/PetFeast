@@ -1,106 +1,134 @@
-﻿<section class="hero">
+﻿@model IEnumerable<PetFeast.Models.Products.Product>
 
-    <div class="container text-center">
+<!-- HERO BANNER -->
+<section class="hero-section">
 
-        <h1 class="display-3 fw-bold">
+    <div class="container-fluid">
 
-            PETFEAST
+        <div class="row g-3">
 
-        </h1>
+            <!-- Banner lớn -->
+            <div class="col-lg-8">
 
-        <p class="lead">
+                <div id="heroCarousel"
+                     class="carousel slide"
+                     data-bs-ride="carousel"
+                     data-bs-interval="5000">
 
-            Thức ăn và phụ kiện chất lượng dành cho thú cưng
+                    <div class="carousel-inner">
 
-        </p>
+                        <div class="carousel-item active">
+                            <img src="~/img/Banner/banner1.jpg"
+                                 class="main-banner"
+                                 alt="">
+                        </div>
 
-        <a asp-controller="Product"
-           asp-action="Index"
-           class="btn btn-danger btn-lg">
+                        <div class="carousel-item">
+                            <img src="~/img/Banner/banner2.jpg"
+                                 class="main-banner"
+                                 alt="">
+                        </div>
 
-            Mua ngay
+                        <div class="carousel-item">
+                            <img src="~/img/Banner/banner3.jpg"
+                                 class="main-banner"
+                                 alt="">
+                        </div>
+                    </div>
 
-        </a>
+                    <button class="carousel-control-prev"
+                            type="button"
+                            data-bs-target="#heroCarousel"
+                            data-bs-slide="prev">
 
-    </div>
+                        <span class="carousel-control-prev-icon"></span>
 
-</section>
+                    </button>
 
-<section class="container py-5">
+                    <button class="carousel-control-next"
+                            type="button"
+                            data-bs-target="#heroCarousel"
+                            data-bs-slide="next">
 
-    <h2 class="text-center mb-5">
-
-        Danh mục nổi bật
-
-    </h2>
-
-    <div class="row">
-
-        <div class="col-md-3">
-            <div class="card text-center p-4">
-                <h1>🐶</h1>
-                <h5>Chó</h5>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card text-center p-4">
-                <h1>🐱</h1>
-                <h5>Mèo</h5>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card text-center p-4">
-                <h1>🦴</h1>
-                <h5>Thức ăn</h5>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card text-center p-4">
-                <h1>🎾</h1>
-                <h5>Đồ chơi</h5>
-            </div>
-        </div>
-
-    </div>
-
-</section>
-
-<section class="container py-5">
-
-    <h2 class="text-center mb-5">
-
-        Sản phẩm nổi bật
-
-    </h2>
-
-    <div class="row">
-
-        <div class="col-md-3">
-            <div class="card">
-
-                <img src="https://placehold.co/300x250"
-                     class="card-img-top">
-
-                <div class="card-body">
-
-                    <h5>Royal Canin</h5>
-
-                    <p>250.000đ</p>
-
-                    <button class="btn btn-danger w-100">
-
-                        Thêm vào giỏ
+                        <span class="carousel-control-next-icon"></span>
 
                     </button>
 
                 </div>
 
             </div>
+
+            <!-- Banner bên phải -->
+            <div class="col-lg-4">
+
+                <div class="banner-right d-flex flex-column gap-3">
+
+                    <a asp-controller="Product"
+                       asp-action="Index"
+                       asp-route-categoryId="1">
+
+                        <img src="~/img/Banner/banner_dog.jpg"
+                             class="side-banner"
+                             alt="Dog">
+
+                    </a>
+
+                    <a asp-controller="Product"
+                       asp-action="Index"
+                       asp-route-categoryId="2">
+
+                        <img src="~/img/Banner/banner_cat.jpg"
+                             class="side-banner"
+                             alt="Cat">
+
+                    </a>
+
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
+</section>
+
+
+<!-- SẢN PHẨM NỔI BẬT -->
+<section class="container py-5">
+
+    <h2 class="section-title">Sản phẩm nổi bật</h2>
+    <partial name="_ProductSlider"
+             model="Model.Take(20)" />
+</section>
+<!-- THỨC ĂN CHÓ -->
+<section class="container py-5">
+
+    <h2 class="section-title">Thức ăn chó</h2>
+    <partial name="_ProductSlider"
+             model="Model.Where(x => x.CategoryId == 1)" />
+</section>
+<!-- THỨC ĂN MÈO -->
+<section class="container py-5">
+    <h2 class="section-title">Thức ăn mèo</h2>
+    <partial name="_ProductSlider"
+             model="Model.Where(x => x.CategoryId == 2)" />
+</section>
+<!-- SNACK -->
+<section class="container py-5">
+    <h2 class="section-title">Snack & Bánh thưởng</h2>
+    <partial name="_ProductSlider"
+             model="Model.Where(x => x.CategoryId == 3)" />
+</section>
+<!-- ĐỒ CHƠI -->
+<section class="container py-5">
+    <h2 class="section-title">Đồ chơi</h2>
+    <partial name="_ProductSlider"
+             model="Model.Where(x => x.CategoryId == 4)" />
+</section>
+<!-- PHỤ KIỆN -->
+<section class="container py-5">
+    <h2 class="section-title">Phụ kiện thú cưng</h2>
+    <partial name="_ProductSlider"
+             model="Model.Where(x => x.CategoryId == 5)" />
 </section>

@@ -1,0 +1,53 @@
+﻿@model PetFeast.Models.Products.Product
+
+
+<div class="container mt-5 mb-5">
+    <div class="row detail-product align-items-center g-5">
+        <!-- IMAGE -->
+        <div class="col-lg-6">
+            <div class="product-image-box">
+                <img src="@Model.ImageUrl"
+                     class="img-fluid"
+                     alt="@Model.ProductName">
+            </div>
+        </div>
+        <!-- INFO -->
+        <div class="col-lg-6">
+            <h1 class="fw-bold text-primary mb-3">
+                @Model.ProductName
+            </h1>
+            <h2 class="text-danger fw-bold mb-4">
+                @Model.Price.ToString("N0") đ
+            </h2>
+            <div class="product-description mb-4">
+                <h5 class="fw-bold">
+                    Mô tả sản phẩm
+                </h5>
+                <p class="text-secondary">
+                    @Model.Description
+                </p>
+            </div>
+            <form asp-controller="ShoppingCart"
+                  asp-action="AddToCart"
+                  method="post">
+                <input type="hidden"
+                       name="productId"
+                       value="@Model.ProductId" />
+                <div class="d-flex align-items-center mb-4">
+                    <label class="fw-bold me-3">
+                        Số lượng:
+                    </label>
+                    <input type="number"
+                           name="quantity"
+                           value="1"
+                           min="1"
+                           class="form-control quantity-box">
+                </div>
+                <button class="btn btn-primary btn-lg w-100 fw-bold add-cart-btn">
+                    <i class="bi bi-cart-plus"></i>
+                    THÊM VÀO GIỎ HÀNG
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
