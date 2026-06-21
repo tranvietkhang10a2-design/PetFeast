@@ -6,10 +6,19 @@ namespace PetFeast.Models.Orders
     {
         public int OrderId { get; set; }
 
+        [Required]
+        public string CustomerName { get; set; } = "";
+
+        [Required]
+        public string Phone { get; set; } = "";
+
+        [Required]
+        public string Address { get; set; } = "";
+
         public decimal TotalAmount { get; set; }
 
         public DateTime OrderDate { get; set; } = DateTime.Now;
 
-        public ICollection<OrderDetail>? OrderDetails { get; set; }
+        public List<OrderDetail>? OrderDetails { get; set; }
     }
 }

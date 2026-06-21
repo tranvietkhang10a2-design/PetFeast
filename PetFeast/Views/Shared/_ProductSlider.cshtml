@@ -52,14 +52,35 @@
 
 
 
-                        <a asp-controller="ShoppingCart"
-                           asp-action="AddToCart"
-                           asp-route-id="@item.ProductId"
-                           class="btn btn-primary w-100">
+                        <form asp-controller="ShoppingCart"
+                              asp-action="AddToCart"
+                              method="post">
 
-                            Thêm vào giỏ
 
-                        </a>
+                            <input type="hidden"
+                                   name="productId"
+                                   value="@item.ProductId" />
+
+
+                            <input type="hidden"
+                                   name="quantity"
+                                   value="1" />
+
+
+
+                            <button type="submit"
+                                    class="btn btn-primary w-100">
+
+
+                                <i class="bi bi-cart-plus"></i>
+
+                                Thêm vào giỏ
+
+
+                            </button>
+
+
+                        </form>
 
 
                     </div>

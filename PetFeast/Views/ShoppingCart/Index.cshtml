@@ -1,0 +1,173 @@
+﻿@using PetFeast.Models.ShoppingCart
+@model List<ShoppingCartItem>
+
+<div class="container mt-5">
+    <h2 class="mb-4 fw-bold text-dark">Giỏ hàng của bạn</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <br />
+        <br />
+        <div class="container">
+            <div class="text-center">
+                <img src="https://www.svgrepo.com/show/17356/empty-cart.svg"
+                     class="img-fluid"
+                     style="width:200px; height:200px; margin:auto;"
+                     alt="Empty cart" />
+                <br />
+                <h1 class="fw-bold mt-4">
+                    Giỏ hàng của bạn đang trống
+                </h1>
+                <br />
+                <p class="text-secondary">
+                    Trước khi thanh toán, bạn cần thêm sản phẩm vào giỏ hàng.
+                    Hãy khám phá những sản phẩm thú cưng tuyệt vời của PETFEAST nhé!
+                </p>
+                <br />
+                <a asp-controller="Product"
+                   asp-action="Index"
+                   class="btn btn-primary px-4 py-2">
+                    Tiếp tục mua sắm
+                </a>
+            </div>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th class="text-center">
+                            <input type="checkbox" id="selectAll" checked/>
+                        </th>
+                        <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá bán</th>
+                        <th>Số lượng</th>
+                        <th>Tổng tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td class="text-center">
+                                <input type="checkbox"
+                                       class="product-checkbox"
+                                       data-id="@item.ProductId"
+                                       @(item.IsSelected ? "checked" : "") />
+                            </td>
+
+                            <td class="text-center">
+                                <img src="@item.ImageUrl"
+                                     width="70"
+                                     height="70"
+                                     style="object-fit:cover;"
+                                     class="rounded" />
+                            </td>
+
+                            <td>
+                                @item.ProductName
+                            </td>
+
+                            <td>
+                                @item.Price.ToString("N0") đ
+                            </td>
+
+                            <td>
+                                @item.Quantity
+                            </td>
+
+                            <td>
+                                @item.TotalPrice.ToString("N0") đ
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-4 p-3 bg-light rounded">
+            <h4>
+                Tổng cộng:
+                <span id="totalPrice"
+                      class="text-danger fw-bold">
+                    @Model.Sum(x => x.TotalPrice).ToString("N0") đ
+                </span>
+            </h4>
+            <div>
+                <a href="/" class="btn btn-outline-secondary me-2">Tiếp tục mua hàng</a>
+                <a asp-controller="Order"
+                   asp-action="CheckOut"
+                   class="btn btn-success">
+
+                    Tiến hành thanh toán
+
+                </a>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    const selectAll =
+        document.getElementById("selectAll");
+    const checkboxes =
+        document.querySelectorAll(".product-checkbox");
+    const total =
+        document.getElementById("totalPrice");
+    function updateTotal()
+    {
+        let sum = 0;
+        document
+        .querySelectorAll(".product-checkbox:checked")
+        .forEach(cb => {
+            sum += Number(cb.dataset.price);
+        });
+        total.innerText =
+            sum.toLocaleString('vi-VN') + " đ";
+    }
+    // Chọn tất cả
+    selectAll.addEventListener("change", function()
+    {
+        checkboxes.forEach(cb => {cb.checked =this.checked;});
+        updateTotal();
+    });
+    // Checkbox từng sản phẩm
+    checkboxes.forEach(cb => {
+        cb.addEventListener("change", function()
+        {
+            let allChecked =
+                document.querySelectorAll(".product-checkbox:checked")
+                .length === checkboxes.length;
+            selectAll.checked = allChecked;
+            updateTotal();
+        });
+    });
+</script>
+<script>
+
+    document.querySelectorAll(".product-checkbox")
+    .forEach(cb => {
+        cb.addEventListener("change", function(){
+            fetch('/ShoppingCart/UpdateSelect',
+            {
+                method:'POST',
+                headers:
+                {
+                    'Content-Type':
+                    'application/x-www-form-urlencoded'
+                },
+                body:
+                `productId=${this.dataset.id}
+                 &isSelected=${this.checked}`
+            });
+        });
+    });
+</script>

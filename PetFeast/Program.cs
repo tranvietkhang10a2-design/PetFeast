@@ -13,6 +13,8 @@ builder.Services.AddDbContext<PetFeastDBContext>(
 options => {options.UseSqlServer(builder.Configuration.GetConnectionString("PetFeastDBContextConnection"));});
 builder.Services.AddScoped<CategoryIRepository, CategoryRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddDistributedMemoryCache();
 
