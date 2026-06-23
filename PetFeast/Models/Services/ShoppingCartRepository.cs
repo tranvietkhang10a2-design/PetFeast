@@ -14,6 +14,13 @@ namespace PetFeast.Models.Services
         {
             _httpContext = httpContext;
         }
+        private void UpdateCartCount(List<ShoppingCartItem> cart)
+        {
+            var count = cart.Sum(x => x.Quantity);
+
+            _httpContext.HttpContext.Session
+                .SetInt32("CartCount", count);
+        }
         public List<ShoppingCartItem> GetCart()
         {
             var session =
@@ -34,6 +41,8 @@ namespace PetFeast.Models.Services
                     CART_KEY,
                     JsonConvert.SerializeObject(cart)
                 );
+
+            UpdateCartCount(cart);
         }
         public void AddToCart(ShoppingCartItem item)
         {

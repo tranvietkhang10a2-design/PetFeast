@@ -5,7 +5,6 @@ namespace PetFeast.Models.Interfaces
     public interface IShoppingCartRepository
     {
         List<ShoppingCartItem> GetCart();
-
         void AddToCart(ShoppingCartItem item);
 
         void Remove(int productId);

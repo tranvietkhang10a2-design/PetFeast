@@ -16,9 +16,22 @@
             <h1 class="fw-bold text-primary mb-3">
                 @Model.ProductName
             </h1>
-            <h2 class="text-danger fw-bold mb-4">
+            <h2 class="text-danger fw-bold mb-3">
                 @Model.Price.ToString("N0") đ
             </h2>
+
+            @if (Model.Quantity > 0)
+            {
+                <p class="text-success fw-bold mb-3">
+                    Còn @Model.Quantity sản phẩm
+                </p>
+            }
+            else
+            {
+                <p class="text-danger fw-bold mb-3">
+                    Hết hàng
+                </p>
+            }
             <div class="product-description mb-4">
                 <h5 class="fw-bold">
                     Mô tả sản phẩm
@@ -41,12 +54,23 @@
                            name="quantity"
                            value="1"
                            min="1"
+                           max="@Model.Quantity"
                            class="form-control quantity-box">
                 </div>
-                <button class="btn btn-primary btn-lg w-100 fw-bold add-cart-btn">
-                    <i class="bi bi-cart-plus"></i>
-                    THÊM VÀO GIỎ HÀNG
-                </button>
+                @if (Model.Quantity > 0)
+                {
+                    <button class="btn btn-primary btn-lg w-100 fw-bold add-cart-btn">
+                        <i class="bi bi-cart-plus"></i>
+                        THÊM VÀO GIỎ HÀNG
+                    </button>
+                }
+                else
+                {
+                    <button class="btn btn-secondary btn-lg w-100 fw-bold add-cart-btn"
+                            disabled>
+                        HẾT HÀNG
+                    </button>
+                }
             </form>
         </div>
     </div>

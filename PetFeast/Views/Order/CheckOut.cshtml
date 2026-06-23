@@ -47,29 +47,78 @@
                         <input class="form-check-input"
                                type="radio"
                                name="DeliveryMethod"
-                               value="Store">
+                               value="Pickup">
                         <label class="form-check-label">
                             Nhận tại cửa hàng
                         </label>
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-md-6">
-                            <input class="form-control"
-                                   placeholder="Tỉnh/Thành phố *"
-                                   name="city"
-                                   required>
+                    <div id="shippingAddress" class="mt-4">
+
+                        <input type="hidden"
+                               name="city"
+                               id="cityName" />
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+                                <select id="province"
+                                        class="form-select">
+
+                                    <option value="">
+                                        Chọn Tỉnh/Thành phố
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <select id="ward"
+                                        name="ward"
+                                        class="form-select">
+
+                                    <option value="">
+                                        Chọn Quận/Huyện
+                                    </option>
+
+                                </select>
+
+                            </div>
+
                         </div>
-                        <div class="col-md-6">
-                            <input class="form-control"
-                                   placeholder="Phường/Xã *"
-                                   name="ward"
-                                   required>
-                        </div>
+                        <textarea class="form-control mt-3"
+                                  placeholder="Số nhà, tên đường..."
+                                  name="Address"></textarea>
+
                     </div>
-                    <textarea class="form-control mt-3"
-                              placeholder="Địa chỉ nhận hàng *"
-                              name="Address"
-                              required></textarea>
+                    <div id="storeInfo"
+                         class="store-info-card mt-4 d-none">
+
+                        <div class="store-icon">
+                            <i class="bi bi-shop"></i>
+                        </div>
+
+                        <div>
+
+                            <h5 class="fw-bold mb-2">
+                                Nhận tại cửa hàng PetFeast
+                            </h5>
+
+                            <p class="mb-2">
+                                <i class="bi bi-geo-alt-fill text-danger"></i>
+                                123 Đường Whatever, TP Đà Lạt, Lâm Đồng
+                            </p>
+
+                            <p class="mb-0">
+                                <i class="bi bi-clock-fill text-warning"></i>
+                                08:00 - 21:00 (Tất cả các ngày)
+                            </p>
+
+                        </div>
+
+                    </div>
                 </div>
                 <!-- Sản phẩm -->
                 <div class="card border-0 shadow-sm p-4 mb-4">
@@ -144,33 +193,7 @@
                               placeholder="Thêm ghi chú (tuỳ chọn)"
                               name="Note"></textarea>
                 </div>
-                <!-- Ưu đãi -->
-                <div class="card border-0 shadow-sm p-4 mb-3">
 
-                    <h5 class="fw-bold mb-3">
-                        Mã ưu đãi
-                    </h5>
-
-
-                    <div class="input-group">
-
-                        <input type="text"
-                               class="form-control"
-                               name="CouponCode"
-                               placeholder="Nhập mã ưu đãi" />
-
-
-                        <button type="button"
-                                class="btn btn-primary">
-
-                            Áp dụng
-
-                        </button>
-
-                    </div>
-
-
-                </div>
                 <!-- Chi tiết thanh toán -->
                 <div class="card border-0 shadow-sm p-4">
                     <h4 class="fw-bold mb-4">
@@ -184,13 +207,23 @@
                             @(Model.Sum(x => x.TotalPrice).ToString("N0")) đ
                         </span>
                     </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>
+                            Phí vận chuyển
+                        </span>
+
+                        <span id="shippingFee">
+                            20.000 đ
+                        </span>
+                    </div>
                     <hr />
                     <div class="d-flex justify-content-between mb-4">
                         <strong>
                             Tổng tiền thanh toán
                         </strong>
-                        <strong class="text-danger fs-4">
-                            @(Model.Sum(x => x.TotalPrice).ToString("N0")) đ
+
+                        <strong class="text-danger fs-4" id="totalPayment">
+                            @((Model.Sum(x => x.TotalPrice) + 20000).ToString("N0")) đ
                         </strong>
                     </div>
                     <button type="submit"
@@ -202,3 +235,174 @@
         </div>
     </form>
 </div>
+<script>
+
+    const deliveryMethods =
+        document.querySelectorAll(
+            'input[name="DeliveryMethod"]'
+        );
+
+    const shippingAddress =
+        document.getElementById(
+            "shippingAddress"
+        );
+
+    const storeInfo =
+        document.getElementById(
+            "storeInfo"
+        );
+
+        function toggleDelivery()
+    {
+        const selected =
+            document.querySelector(
+                'input[name="DeliveryMethod"]:checked'
+            ).value;
+
+        const province =
+            document.getElementById("province");
+
+        const ward =
+            document.getElementById("ward");
+
+        const address =
+            document.querySelector(
+                'textarea[name="Address"]'
+            );
+
+        if(selected === "Ship")
+        {
+            shippingAddress.classList.remove("d-none");
+            storeInfo.classList.add("d-none");
+
+            province.required = true;
+            ward.required = true;
+            address.required = true;
+        }
+        else
+        {
+            shippingAddress.classList.add("d-none");
+            storeInfo.classList.remove("d-none");
+
+            province.required = false;
+            ward.required = false;
+            address.required = false;
+        }
+    }
+
+    deliveryMethods.forEach(x =>
+    {
+        x.addEventListener(
+            "change",
+            toggleDelivery
+        );
+    });
+
+    toggleDelivery();
+
+//Province
+    async function loadProvinces()
+    {
+        const response =
+            await fetch(
+                'https://provinces.open-api.vn/api/p/'
+            );
+
+        const provinces =
+            await response.json();
+
+        const provinceSelect =
+            document.getElementById("province");
+
+        provinces.forEach(p =>
+        {
+            provinceSelect.innerHTML +=
+            `<option value="${p.code}">
+                ${p.name}
+            </option>`;
+        });
+    }
+
+    loadProvinces();
+        document
+    .getElementById("province")
+    .addEventListener("change", async function ()
+    {
+        const provinceCode =
+            this.value;
+
+        const provinceName =
+            this.options[this.selectedIndex].text;
+
+        document
+            .getElementById("cityName")
+            .value = provinceName;
+
+        const response =
+            await fetch(
+                `https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`
+            );
+
+        const data =
+            await response.json();
+
+        const wardSelect =
+            document.getElementById("ward");
+
+        wardSelect.innerHTML =
+            '<option value="">Chọn Quận/Huyện</option>';
+
+        data.districts.forEach(d =>
+        {
+            wardSelect.innerHTML +=
+            `<option value="${d.name}">
+                ${d.name}
+            </option>`;
+        });
+    });
+
+// Ship Fee
+    const productTotal = @Model.Sum(x => x.TotalPrice);
+
+
+    function updateTotal()
+    {
+        const delivery =
+            document.querySelector(
+                'input[name="DeliveryMethod"]:checked'
+            ).value;
+
+
+        let shipping = 0;
+
+
+        if(delivery === "Ship")
+        {
+            shipping = 30000;
+        }
+
+
+        document.getElementById("shippingFee")
+            .innerText =
+            shipping.toLocaleString('vi-VN') + " đ";
+
+
+        document.getElementById("totalPayment")
+            .innerText =
+            (productTotal + shipping)
+            .toLocaleString('vi-VN') + " đ";
+    }
+
+
+
+    deliveryMethods.forEach(x =>
+    {
+        x.addEventListener(
+            "change",
+            updateTotal
+        );
+    });
+
+
+    updateTotal();
+</script>

@@ -61,6 +61,7 @@
                                 <input type="checkbox"
                                        class="product-checkbox"
                                        data-id="@item.ProductId"
+                                       data-price="@item.TotalPrice"
                                        @(item.IsSelected ? "checked" : "") />
                             </td>
 
@@ -98,7 +99,9 @@
                 Tổng cộng:
                 <span id="totalPrice"
                       class="text-danger fw-bold">
-                    @Model.Sum(x => x.TotalPrice).ToString("N0") đ
+                @(Model.Where(x => x.IsSelected)
+                                .Sum(x => x.TotalPrice)
+                                .ToString("N0"))
                 </span>
             </h4>
             <div>

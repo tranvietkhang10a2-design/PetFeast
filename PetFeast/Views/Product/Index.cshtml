@@ -1,21 +1,232 @@
 ﻿@model IEnumerable<PetFeast.Models.Products.Product>
 
-<div class="container mt-5">
+<div class="container mt-4">
+
+    <div class="product-header">
+
+        <div>
+
+            @if (!string.IsNullOrEmpty(ViewBag.Keyword))
+            {
+                <p class="search-result-text mb-1">
+                    Kết quả tìm kiếm cho
+                    <strong>"@ViewBag.Keyword"</strong>
+                    (@Model.Count() sản phẩm)
+                </p>
+            }
+            else
+            {
+                <h4 class="fw-bold text-primary mb-0">
+                    Tất cả sản phẩm
+                </h4>
+            }
 
 
-    <div class="d-flex justify-content-between align-items-center">
+        </div>
+        <form method="get" class="sort-form">
 
+            <input type="hidden"
+                   name="keyword"
+                   value="@Context.Request.Query["keyword"]" />
 
-        <h2 class="fw-bold">
-            Sản phẩm
-        </h2>
+            <input type="hidden"
+                   name="categoryId"
+                   value="@Context.Request.Query["categoryId"]" />
 
+            <input type="hidden"
+                   name="maxPrice"
+                   value="@Context.Request.Query["maxPrice"]" />
+
+            <select name="sortOrder"
+                    class="form-select sort-select"
+                    onchange="this.form.submit()">
+
+                <option value="">
+                    Sắp xếp
+                </option>
+
+                <option value="price_asc">
+                    Giá thấp → cao
+                </option>
+
+                <option value="price_desc">
+                    Giá cao → thấp
+                </option>
+
+            </select>
+
+        </form>
+        </div>
+
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="col-md-3">
+
+            <form method="get">
+
+                <div class="card mb-3">
+
+                    <div class="card-header bg-primary text-white">
+                        DANH MỤC SẢN PHẨM
+                    </div>
+
+                    <div class="list-group list-group-flush">
+
+                        <a href="/Product"
+                           class="list-group-item">
+                            Tất cả
+                        </a>
+
+                        @foreach (var c in ViewBag.Categories)
+                        {
+                            <a href="/Product?categoryId=@c.CategoryId"
+                               class="list-group-item">
+                                @c.CategoryName
+                            </a>
+                        }
+
+                    </div>
+
+                </div>
+
+                <div class="card mt-3">
+
+                    <div class="card-header bg-primary text-white">
+                        KHOẢNG GIÁ
+                    </div>
+
+                    <div class="card-body">
+
+                        <input type="range"
+                               id="priceRange"
+                               name="maxPrice"
+                               min="0"
+                               max="500000"
+                               value="@(ViewBag.MaxPrice ?? 0)"
+                               step="10000"
+                               class="price-slider">
+
+                        <div class="d-flex justify-content-between mt-3">
+
+                            <span>
+                                0 đ
+                            </span>
+
+                            <span id="currentPrice">
+                                500.000 đ
+                            </span>
+
+                        </div>
+
+                        <button type="submit"
+                                class="btn btn-primary w-100 mt-3">
+                            Lọc
+                        </button>
+
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+        <!-- PRODUCTS -->
+            <div class="col-md-9">
+
+                @if (!Model.Any())
+                {
+                    <div class="text-center py-5">
+
+                        <h4>
+                            Không tìm thấy sản phẩm phù hợp
+                        </h4>
+
+                        <p class="text-muted">
+                            Hãy thử từ khóa khác.
+                        </p>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="row">
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-md-4 mb-4">
+
+                                <div class="card h-100">
+
+                                    <a asp-action="Detail"
+                                       asp-route-id="@item.ProductId">
+
+                                        <img src="@item.ImageUrl"
+                                             class="card-img-top"
+                                             style="height:250px;object-fit:cover;" />
+
+                                    </a>
+
+                                    <div class="card-body">
+
+                                        <h6>@item.ProductName</h6>
+
+                                        <p class="text-danger fw-bold">
+                                            @item.Price.ToString("N0") đ
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+                }
+                
+
+            </div>
+
+        </div>
 
     </div>
 
-
-    <partial name="_Product"
-             model="Model" />
-
-
 </div>
+<script>
+
+    const slider =
+        document.getElementById("priceRange");
+
+    const currentPrice =
+        document.getElementById("currentPrice");
+
+    function updateSlider() {
+
+        currentPrice.innerHTML =
+            Number(slider.value)
+            .toLocaleString('vi-VN') + " đ";
+
+        let percent =
+            (slider.value - slider.min)
+            / (slider.max - slider.min)
+            * 100;
+
+        slider.style.background =
+    `linear-gradient(
+        to right,
+        #ffc107 0%,
+        #ffc107 ${percent}%,
+        #dbeafe ${percent}%,
+        #dbeafe 100%
+    )`;
+    }
+
+    updateSlider();
+
+    slider.addEventListener(
+        "input",
+        updateSlider
+    );
+
+</script>

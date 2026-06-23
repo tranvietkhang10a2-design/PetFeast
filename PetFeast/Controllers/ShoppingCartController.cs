@@ -22,15 +22,29 @@ namespace PetFeast.Controllers
             return View(cart);
         }
         [HttpPost]
-        public IActionResult AddToCart(
-            int productId,
-            int quantity)
+        public IActionResult AddToCart( int productId, int quantity)
         {
             var product =
                 _productRepo.GetById(productId);
             if (product == null)
             {
                 return NotFound();
+            }
+            if (product.Quantity <= 0)
+            {
+                TempData["Error"] = "Sản phẩm hiện đã hết hàng";
+                return RedirectToAction(
+                    "Detail",
+                    "Product",
+                    new { id = productId });
+            }
+            if (quantity > product.Quantity)
+            {
+                TempData["Error"] = $"Chỉ còn {product.Quantity} sản phẩm trong kho";
+                return RedirectToAction(
+                    "Detail",
+                    "Product",
+                    new { id = productId });
             }
             var item = new ShoppingCartItem
             {
@@ -40,6 +54,25 @@ namespace PetFeast.Controllers
                 Price = product.Price,
                 Quantity = quantity
             };
+            var cart = _cartRepo.GetCart();
+
+            var exist = cart.FirstOrDefault(
+                x => x.ProductId == productId);
+
+            if (exist != null)
+            {
+                if (exist.Quantity + quantity > product.Quantity)
+                {
+                    TempData["Error"] =
+                        $"Chỉ còn {product.Quantity} sản phẩm trong kho";
+
+                    return RedirectToAction(
+                        "Detail",
+                        "Product",
+                        new { id = productId });
+                }
+            }
+
             _cartRepo.AddToCart(item);
             return RedirectToAction(nameof(Index));
         }
@@ -49,13 +82,30 @@ namespace PetFeast.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
-        public IActionResult Update(
-            int productId,
-            int quantity)
+        public IActionResult UpdateCart( int productId, int quantity)
         {
+            var product =
+                _productRepo.GetById(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            if (quantity > product.Quantity)
+            {
+                quantity = product.Quantity;
+            }
+
+            if (quantity < 1)
+            {
+                quantity = 1;
+            }
+
             _cartRepo.UpdateQuantity(
                 productId,
                 quantity);
+
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
