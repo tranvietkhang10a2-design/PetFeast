@@ -22,6 +22,7 @@
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
 
+
     <link rel="stylesheet" href="~/css/site.css" />
 
 </head>
@@ -42,7 +43,7 @@
                        asp-action="Index"
                        class="logo-link">
 
-                        <img src="~/img/Logo/logo.png"
+                        <img src="~/img/Logo/logo1.png"
                              alt="PetFeast Logo"
                              class="logo-img">
 
@@ -215,7 +216,7 @@
 
                     <a class="nav-link"
                        asp-controller="Home"
-                       asp-action="About">
+                       asp-action="AboutUs">
 
                         Về chúng tôi
 
@@ -226,8 +227,8 @@
                 <li class="nav-item">
 
                     <a class="nav-link"
-                       asp-controller="Contact"
-                       asp-action="Index">
+                       asp-controller="Home"
+                       asp-action="Contact">
 
                         Liên hệ
 
@@ -338,7 +339,7 @@
                     <div class="col-lg-3 col-md-6 mb-4">
 
                         <h2 class="footer-logo">
-                            <img src="~/img/Logo/logo.png"
+                            <img src="~/img/Logo/logo1.png"
                                  alt="PetFeast Logo"
                                  class="footer-logo-img">
                         </h2>
@@ -383,11 +384,26 @@
 
                         <ul class="footer-links">
 
-                            <li><a href="#">Hướng dẫn mua hàng</a></li>
+                            <li>
+                                <a asp-controller="Support"
+                                   asp-action="HuongDanMuaHang">
+                                    Hướng dẫn mua hàng
+                                </a>
+                            </li>
 
-                            <li><a href="#">Chính sách giao hàng</a></li>
+                            <li>
+                                <a asp-controller="Support"
+                                   asp-action="ChinhSachGiaoHang">
+                                    Chính sách giao hàng
+                                </a>
+                            </li>
 
-                            <li><a href="#">Chính sách đổi trả</a></li>
+                            <li>
+                                <a asp-controller="Support"
+                                   asp-action="ChinhSachDoiTra">
+                                    Chính sách đổi trả
+                                </a>
+                            </li>
 
                         </ul>
 
@@ -399,11 +415,26 @@
 
                         <ul class="footer-links">
 
-                            <li><a href="#">Điều khoản sử dụng</a></li>
+                            <li>
+                                <a asp-controller="Support"
+                                   asp-action="DieuKhoanSuDung">
+                                    Điều khoản sử dụng
+                                </a>
+                            </li>
 
-                            <li><a href="#">Bảo mật thông tin</a></li>
+                            <li>
+                                <a asp-controller="Support"
+                                   asp-action="BaoMatThongTin">
+                                    Bảo mật thông tin
+                                </a>
+                            </li>
 
-                            <li><a href="#">Liên hệ</a></li>
+                            <li>
+                                <a asp-controller="Home"
+                                   asp-action="Contact">
+                                    Liên hệ
+                                </a>
+                            </li>
 
                         </ul>
 

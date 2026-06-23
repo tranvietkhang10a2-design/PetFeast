@@ -1,0 +1,215 @@
+﻿@model PetFeast.Models.Contacts.Contact
+@{
+    ViewData["Title"] = "Liên hệ";
+}
+
+<div class="main-content">
+
+    <div class="container">
+<div class="policy-banner">
+
+    <h1>Liên hệ với PetFeast</h1>
+
+    <p>
+        Nếu có bất kỳ thắc mắc nào về sản phẩm hoặc dịch vụ,
+        vui lòng liên hệ với chúng tôi để được hỗ trợ nhanh chóng.
+    </p>
+
+</div>
+<div class="row g-4">
+
+    <div class="col-md-3">
+
+        <div class="policy-card">
+
+            <i class="bi bi-geo-alt"></i>
+
+            <h5>Địa chỉ</h5>
+
+            <p>
+                        123 Đường Whatever, TP Đà Lạt, Lâm Đồng
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <div class="policy-card">
+
+            <i class="bi bi-telephone"></i>
+
+            <h5>Điện thoại</h5>
+
+            <p>
+                0886 469 752
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <div class="policy-card">
+
+            <i class="bi bi-envelope"></i>
+
+            <h5>Email</h5>
+
+            <p>
+                petfeast@gmail.com
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <div class="policy-card">
+
+            <i class="bi bi-clock"></i>
+
+            <h5>Giờ làm việc</h5>
+
+            <p>
+                08:00 - 21:00
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="row mt-5">
+
+    <!-- Thông tin -->
+    <div class="col-lg-5">
+
+        <div class="policy-content">
+
+            <h3>Thông tin liên hệ</h3>
+
+            <p>
+                PetFeast là cửa hàng chuyên cung cấp thức ăn,
+                phụ kiện và đồ chơi dành cho chó mèo với chất lượng cao.
+            </p>
+
+            <hr>
+
+            <p>
+                <b>Địa chỉ:</b><br>
+                        123 Đường Whatever, TP Đà Lạt, Lâm Đồng
+            </p>
+
+            <p>
+                <b>Số điện thoại:</b><br>
+                0886 469 752
+            </p>
+
+            <p>
+                <b>Email:</b><br>
+                petfeast@gmail.com
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Form -->
+    <div class="col-lg-7">
+
+        <div class="policy-content">
+
+            <h3>Gửi tin nhắn cho chúng tôi</h3>
+            <form asp-controller="Contact"
+                  asp-action="Index"
+                  method="post">
+
+
+                <div class="mb-3">
+
+                    <label>Họ và tên</label>
+
+                    <input class="form-control"
+                           asp-for="Name"
+                           placeholder="Nhập họ và tên">
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label>Email</label>
+
+                    <input class="form-control"
+                           asp-for="Email"
+                           placeholder="Nhập email">
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label>Số điện thoại</label>
+
+                    <input class="form-control"
+                           asp-for="Phone"
+                           placeholder="Nhập số điện thoại">
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label>Nội dung</label>
+
+                    <textarea class="form-control"
+                              asp-for="Message"
+                              rows="5"
+                              placeholder="Nhập nội dung cần hỗ trợ"></textarea>
+
+                </div>
+
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="bi bi-send"></i>
+
+                    Gửi liên hệ
+
+                </button>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+    </div>
+<div class="policy-content mt-5">
+
+    <h3>Hỗ trợ khách hàng</h3>
+
+    <p>
+        Đội ngũ chăm sóc khách hàng của PetFeast luôn sẵn sàng hỗ trợ
+        quý khách trong quá trình mua sắm và sử dụng dịch vụ.
+    </p>
+
+    <p>
+        Chúng tôi cam kết phản hồi nhanh chóng các yêu cầu,
+        tư vấn sản phẩm phù hợp và giải quyết các vấn đề phát sinh
+        nhằm mang đến trải nghiệm tốt nhất cho khách hàng.
+    </p>
+
+</div>
+</div>
+</div>
