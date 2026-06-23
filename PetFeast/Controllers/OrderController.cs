@@ -63,10 +63,19 @@ namespace PetFeast.Controllers
             }
             // Tổng tiền
             var productTotal = cart.Sum(x => x.TotalPrice);
-            // Phí ship
+
+
+            // Tính phí ship
             if (order.DeliveryMethod == "Ship")
             {
-                order.ShippingFee = 30000;
+                if (productTotal >= 199000)
+                {
+                    order.ShippingFee = 0;
+                }
+                else
+                {
+                    order.ShippingFee = 20000;
+                }
             }
             else
             {

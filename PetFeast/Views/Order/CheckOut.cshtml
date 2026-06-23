@@ -376,10 +376,17 @@
         let shipping = 0;
 
 
-        if(delivery === "Ship")
+            if(delivery === "Ship")
+    {
+        if(productTotal >= 199000)
         {
-            shipping = 30000;
+            shipping = 0;
         }
+        else
+        {
+            shipping = 20000;
+        }
+    }
 
 
         document.getElementById("shippingFee")
