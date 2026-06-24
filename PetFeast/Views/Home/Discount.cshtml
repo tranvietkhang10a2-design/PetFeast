@@ -1,0 +1,54 @@
+﻿@model IEnumerable<PetFeast.Models.Products.Product>
+
+
+<div class="main-content">
+    <div class="container">
+        <div class="policy-banner">
+            <h1>
+                Sản phẩm khuyến mãi
+            </h1>
+            <p>
+                Những sản phẩm đang có ưu đãi hấp dẫn dành cho thú cưng
+            </p>
+        </div>
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="sale-card">
+                        <div class="sale-img">
+                            <span class="discount-badge">
+                                -@item.DiscountPercent%
+                            </span>
+                            <a asp-controller="Product"
+                               asp-action="Detail"
+                               asp-route-id="@item.ProductId">
+                                <img src="@item.ImageUrl"
+                                     alt="@item.ProductName">
+                            </a>
+                        </div>
+                        <div class="sale-body">
+                            <h5>
+                                @item.ProductName
+                            </h5>
+                            <div class="price-box">
+                                <span class="old-price">
+                                    @item.Price.ToString("N0") đ
+                                </span>
+                                <span class="new-price">
+                                    @item.DiscountPrice.ToString("N0") đ
+                                </span>
+                            </div>
+                            <a asp-controller="Product"
+                               asp-action="Detail"
+                               asp-route-id="@item.ProductId"
+                               class="btn btn-primary w-100 mt-3">
+                                Xem sản phẩm
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PetFeast.Models;
 using PetFeast.Models.Interfaces;
 using System.Diagnostics;
@@ -18,11 +19,20 @@ namespace PetFeast.Controllers
         {
             var products = _productRepository.GetAll();
 
+            ViewBag.FeaturedProducts =
+                _productRepository.GetBestSellingProducts(8);
+
             return View(products);
         }
-        public IActionResult Promotion()
+        public IActionResult Discount()
         {
-            return View();
+            var products = _productRepository
+                .GetAll()
+                .Where(x => x.DiscountPercent > 0)
+                .ToList();
+
+
+            return View(products);
         }
         public IActionResult AboutUs()
         {

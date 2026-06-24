@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using PetFeast.Models.Contacts;
+using PetFeast.Models.Identity;
 using PetFeast.Models.Orders;
 using PetFeast.Models.Products;
-using PetFeast.Models.Contacts;
 namespace PetFeast.Data
 {
-    public class PetFeastDBContext : DbContext
+    public class PetFeastDBContext : IdentityDbContext<ApplicationUser>
     {
         public PetFeastDBContext(
             DbContextOptions<PetFeastDBContext> options)

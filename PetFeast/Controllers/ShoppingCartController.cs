@@ -51,7 +51,7 @@ namespace PetFeast.Controllers
                 ProductId = product.ProductId,
                 ProductName = product.ProductName,
                 ImageUrl = product.ImageUrl,
-                Price = product.Price,
+                Price = product.DiscountPercent > 0 ? product.DiscountPrice : product.Price,
                 Quantity = quantity
             };
             var cart = _cartRepo.GetCart();

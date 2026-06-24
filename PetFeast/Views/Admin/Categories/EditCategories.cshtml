@@ -1,0 +1,46 @@
+﻿@model PetFeast.Models.Products.Category
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow mt-4">
+
+    <div class="card-header bg-warning">
+
+        <h4>Sửa danh mục</h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="EditCategory">
+
+            <input hidden asp-for="CategoryId">
+
+            <div class="mb-3">
+
+                <label>Tên danh mục</label>
+
+                <input asp-for="CategoryName"
+                       class="form-control">
+
+            </div>
+
+            <button class="btn btn-warning">
+
+                Cập nhật
+
+            </button>
+            <a asp-action="CategoryList"
+               class="btn btn-secondary">
+
+                <i class="bi bi-x-circle"></i>
+                Hủy
+
+            </a>
+        </form>
+
+    </div>
+
+</div>  

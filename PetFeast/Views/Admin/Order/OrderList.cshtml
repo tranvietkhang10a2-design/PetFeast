@@ -1,0 +1,133 @@
+﻿@model IEnumerable<PetFeast.Models.Orders.Order>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="card shadow mt-4">
+
+    <div class="card-header bg-danger text-white">
+
+        <h4>Quản lý đơn hàng</h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Mã</th>
+                    <th>Khách hàng</th>
+                    <th>SĐT</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>#@item.OrderId</td>
+
+                        <td>@item.CustomerName</td>
+
+                        <td>@item.Phone</td>
+
+                        <td>@item.OrderDate.ToString("dd/MM/yyyy")</td>
+
+                        <td>@item.TotalAmount.ToString("N0") đ</td>
+
+                        <td>
+
+                            @if (item.Status == "Chờ xác nhận")
+                            {
+                                <span class="badge bg-warning">
+                                    @item.Status
+                                </span>
+                            }
+                            else if (item.Status == "Đang giao")
+                            {
+                                <span class="badge bg-primary">
+                                    @item.Status
+                                </span>
+                            }
+                            else if (item.Status == "Hoàn thành")
+                            {
+                                <span class="badge bg-success">
+                                    @item.Status
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">
+                                    @item.Status
+                                </span>
+                            }
+
+                        </td>
+
+                        <td class="text-center">
+
+
+                            <a asp-action="OrderDetail"
+                               asp-route-id="@item.OrderId"
+                               class="btn btn-outline-info btn-sm"
+                               title="Chi tiết">
+
+                                <i class="bi bi-eye"></i>
+
+                            </a>
+
+
+                            <a asp-action="ConfirmOrder"
+                               asp-route-id="@item.OrderId"
+                               class="btn btn-outline-primary btn-sm"
+                               title="Đang giao">
+
+                                <i class="bi bi-truck"></i>
+
+                            </a>
+
+
+                            <a asp-action="CompleteOrder"
+                               asp-route-id="@item.OrderId"
+                               class="btn btn-outline-success btn-sm"
+                               title="Hoàn thành">
+
+                                <i class="bi bi-check-circle"></i>
+
+                            </a>
+
+
+                            <a asp-action="CancelOrder"
+                               asp-route-id="@item.OrderId"
+                               class="btn btn-outline-danger btn-sm"
+                               title="Hủy">
+
+                                <i class="bi bi-x-circle"></i>
+
+                            </a>
+
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PetFeast.Models.Interfaces;
 using PetFeast.Models.Products;
+using PetFeast.Models.Services;
 
 namespace PetFeast.Controllers
 {
@@ -65,6 +66,10 @@ namespace PetFeast.Controllers
             {
                 return NotFound();
             }
+            ViewBag.RelatedProducts = _productRepo.GetAll().Where(x => x.CategoryId == product.CategoryId && x.ProductId != product.ProductId)
+        .Take(4)
+        .ToList();
+
             return View(product);
         }
 

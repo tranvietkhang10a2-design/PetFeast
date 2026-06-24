@@ -22,5 +22,7 @@ namespace PetFeast.Models.Orders
         public DateTime OrderDate { get; set; } = DateTime.Now;
 
         public List<OrderDetail>? OrderDetails { get; set; }
+        public string? UserId { get; set; }
+        public string Status { get; set; } = "Chờ xác nhận";
     }
 }

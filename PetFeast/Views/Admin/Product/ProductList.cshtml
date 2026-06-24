@@ -1,0 +1,184 @@
+﻿@model IEnumerable<PetFeast.Models.Products.Product>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h3 class="fw-bold">
+        Danh sách sản phẩm
+    </h3>
+
+
+    <form asp-controller="Admin"
+          asp-action="ProductSearch"
+          method="get"
+          class="product-search">
+
+        <input type="text"
+               name="keyword"
+               placeholder="Tìm sản phẩm..."
+               value="@Context.Request.Query["keyword"]" />
+
+        <button type="submit">
+            <i class="bi bi-search"></i>
+        </button>
+
+    </form>
+
+</div>
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+
+        <div class="d-flex justify-content-between">
+
+            <h4>Quản lý sản phẩm</h4>
+
+            <a asp-action="CreateProduct"
+               class="btn btn-light">
+
+                <i class="bi bi-plus-circle"></i>
+
+                Thêm sản phẩm
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered table-hover">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Ảnh</th>
+
+                    <th>Tên sản phẩm</th>
+
+                    <th>Giá</th>
+                    <th>Giảm giá</th>
+                    <th>Tồn kho</th>
+
+                    <th>Danh mục</th>
+
+                    <th></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.ProductId</td>
+
+                        <td width="120">
+
+                            <img src="@item.ImageUrl"
+                                 width="80">
+
+                        </td>
+
+                        <td>@item.ProductName</td>
+
+                        <td>
+
+                            @if (item.DiscountPercent > 0)
+                            {
+
+                                <del>
+                                    @String.Format("{0:N0}", item.Price) đ
+                                </del>
+
+                                <br />
+
+                                <span class="text-danger fw-bold">
+
+                                    @String.Format("{0:N0}", item.DiscountPrice) đ
+
+                                </span>
+
+                            }
+                            else
+                            {
+
+                                @String.Format("{0:N0}", item.Price) <text>đ</text>
+
+                            }
+
+                        </td>
+                        <td>
+
+                            @if (item.DiscountPercent > 0)
+                            {
+                                <span class="badge bg-danger">
+
+                                    -@item.DiscountPercent%
+
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">
+
+                                    Không giảm
+
+                                </span>
+                            }
+
+                        </td>
+                        <td>@item.Quantity</td>
+
+                        <td>@item.Category?.CategoryName</td>
+
+                        <td>
+
+                            <div class="action-buttons">
+
+
+                                <a asp-action="EditProduct"
+                                   asp-route-id="@item.ProductId"
+                                   class="btn btn-warning btn-sm"
+                                   title="Sửa">
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </a>
+
+
+                                <a asp-action="DeleteProduct"
+                                   asp-route-id="@item.ProductId"
+                                   onclick="return confirm('Xóa sản phẩm này?')"
+                                   class="btn btn-danger btn-sm"
+                                   title="Xóa">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </a>
+
+
+                            </div>
+
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

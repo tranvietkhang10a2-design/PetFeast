@@ -16,9 +16,28 @@
             <h1 class="fw-bold text-primary mb-3">
                 @Model.ProductName
             </h1>
-            <h2 class="text-danger fw-bold mb-3">
-                @Model.Price.ToString("N0") đ
-            </h2>
+            @if (Model.DiscountPercent > 0)
+            {
+                <h4 class="text-muted">
+                    <del>
+                        @Model.Price.ToString("N0") đ
+                    </del>
+                </h4>
+
+                <h2 class="text-danger fw-bold mb-3">
+                    @Model.DiscountPrice.ToString("N0") đ
+                </h2>
+
+                <span class="badge bg-danger">
+                    Giảm @Model.DiscountPercent%
+                </span>
+            }
+            else
+            {
+                <h2 class="text-danger fw-bold mb-3">
+                    @Model.Price.ToString("N0") đ
+                </h2>
+            }
 
             @if (Model.Quantity > 0)
             {
@@ -73,5 +92,71 @@
                 }
             </form>
         </div>
+    </div>
+</div>
+<div class="container mt-5 mb-5">
+
+
+    <h2 class="fw-bold text-primary mb-4">
+        Sản phẩm liên quan
+    </h2>
+
+
+    <div class="row g-4">
+
+
+        @foreach (var item in ViewBag.RelatedProducts)
+        {
+
+            <div class="col-md-3">
+
+
+                <a asp-controller="Product"
+                   asp-action="Detail"
+                   asp-route-id="@item.ProductId"
+                   class="text-decoration-none text-dark">
+
+
+                    <div class="card h-100 product-card">
+
+
+                        <img src="@item.ImageUrl"
+                             class="card-img-top"
+                             style="height:220px;object-fit:contain">
+
+
+                        <div class="card-body">
+
+
+                            <h5>
+                                @item.ProductName
+                            </h5>
+
+
+                            @if (item.DiscountPercent > 0)
+                            {
+
+                                <del class="text-muted">
+                                    @item.Price.ToString("N0") đ
+                                </del>
+
+                                <h5 class="text-danger fw-bold">
+                                    @item.DiscountPrice.ToString("N0") đ
+                                </h5>
+
+                            }
+                            else
+                            {
+
+                                <h5 class="text-danger fw-bold">
+                                    @item.Price.ToString("N0") đ
+                                </h5>
+
+                            }
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
     </div>
 </div>

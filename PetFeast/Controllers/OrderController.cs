@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PetFeast.Data;
 using PetFeast.Models.Interfaces;
 using PetFeast.Models.Orders;
+using System.Security.Claims;
 
 namespace PetFeast.Controllers
 {
@@ -9,31 +13,39 @@ namespace PetFeast.Controllers
         private readonly IShoppingCartRepository _cartRepo;
         private readonly IOrderRepository _orderRepo;
         private readonly IProductRepository _productRepo;
+        private readonly PetFeastDBContext _context;
         public OrderController(
             IShoppingCartRepository cartRepo,
             IOrderRepository orderRepo,
-            IProductRepository productRepo)
+            IProductRepository productRepo,
+            PetFeastDBContext context)
         {
             _cartRepo = cartRepo;
             _orderRepo = orderRepo;
             _productRepo = productRepo;
+            _context = context;
         }
         // HIỂN THỊ TRANG CHECKOUT
+        [Authorize]
         public IActionResult CheckOut()
         {
             var cart = _cartRepo.GetCart()
                    .Where(x => x.IsSelected)
                    .ToList();
+
             if (cart.Count == 0)
             {
                 return RedirectToAction(
                     "Index",
                     "ShoppingCart");
             }
+
             return View(cart);
         }
         // LƯU ĐƠN HÀNG
+        [Authorize]
         [HttpPost]
+        
         public IActionResult CheckOut(
             Order order,
             string city,
@@ -115,15 +127,32 @@ namespace PetFeast.Controllers
                         Price = item.Price
                     });
             }
+            // Lưu userid
+            order.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _orderRepo.Add(order);
             _orderRepo.Save();
             _cartRepo.ClearCart();
             return RedirectToAction(
                 nameof(CheckOutComplete));
         }
+        [Authorize]
         public IActionResult CheckOutComplete()
         {
             return View();
+        }
+        [Authorize]
+        public IActionResult UserOrderList()
+        {
+            var userId =
+                User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var orders = _context.Orders
+    .Where(x => x.UserId == userId)
+    .Include(x => x.OrderDetails)
+        .ThenInclude(x => x.Product)
+    .ToList();
+
+            return View(orders);
         }
     }
 }

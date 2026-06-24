@@ -1,0 +1,82 @@
+﻿@model IEnumerable<PetFeast.Models.Orders.Order>
+
+@{
+    int stt = 1;
+}
+
+<div class="container mt-5">
+
+    <h2 class="fw-bold text-primary mb-4">
+        Đơn hàng của tôi
+    </h2>
+
+    <table class="table table-bordered align-middle">
+
+        <thead class="table-primary">
+
+            <tr>
+                <th>STT</th>
+                <th>Ngày đặt</th>
+                <th>Sản phẩm</th>
+                <th>Địa chỉ giao hàng</th>
+                <th>Tổng tiền</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @foreach (var order in Model)
+            {
+                <tr>
+
+                    <td>@stt</td>
+
+                    <td>
+                        @order.OrderDate.ToString("dd/MM/yyyy HH:mm")
+                    </td>
+
+                    <td>
+                        @foreach (var item in order.OrderDetails)
+                        {
+                            <div class="d-flex align-items-center mb-2">
+
+                                <img src="@item.Product.ImageUrl"
+                                     style="width:80px;height:80px;object-fit:contain;">
+
+                                <div class="ms-3">
+
+                                    <strong>@item.Product.ProductName</strong>
+
+                                    <br />
+
+                                    SL: @item.Quantity
+
+                                    <br />
+
+                                    @item.Price.ToString("N0") đ
+
+                                </div>
+
+                            </div>
+                        }
+                    </td>
+
+                    <td>
+                        @order.Address
+                    </td>
+
+                    <td class="fw-bold text-danger">
+                        @order.TotalAmount.ToString("N0") đ
+                    </td>
+
+                </tr>
+
+                stt++;
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

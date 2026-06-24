@@ -53,5 +53,14 @@ namespace PetFeast.Models.Services
         {
             _context.SaveChanges();
         }
+        public IEnumerable<Product> GetBestSellingProducts(int count)
+        {
+            return _context.OrderDetails
+                .GroupBy(od => od.ProductId)
+                .OrderByDescending(g => g.Sum(x => x.Quantity))
+                .Take(count)
+                .Select(g => g.First().Product)
+                .ToList();
+        }
     }
 }

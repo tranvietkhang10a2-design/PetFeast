@@ -1,0 +1,155 @@
+﻿@page
+@model RegisterModel
+
+@{
+    ViewData["Title"] = "Đăng ký tài khoản";
+}
+
+
+<div class="container auth-page mt-5 mb-5">
+
+
+    <div class="row justify-content-center align-items-center">
+
+
+        <!-- LOGO -->
+        <div class="col-lg-3 col-md-6 mb-4 d-flex justify-content-center align-items-center">
+
+            <img src="~/img/Logo/logo1.png"
+                 class="auth-logo"
+                 alt="PetFeast"
+                 style="width:400px !important;">
+
+        </div>
+
+
+
+        <!-- REGISTER -->
+        <div class="col-md-5">
+
+            <div class="policy-content shadow">
+
+
+                <h2 class="text-center text-primary fw-bold mb-4">
+                    Tạo tài khoản
+                </h2>
+
+
+
+                <form id="registerForm"
+                      asp-route-returnUrl="@Model.ReturnUrl"
+                      method="post">
+
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger">
+                    </div>
+
+
+
+                    <div class="mb-3">
+
+                        <label class="fw-bold">
+                            Email
+                        </label>
+
+
+                        <input asp-for="Input.Email"
+                               class="form-control"
+                               placeholder="Nhập email" />
+
+
+                        <span asp-validation-for="Input.Email"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+
+                    <div class="mb-3">
+
+                        <label class="fw-bold">
+                            Mật khẩu
+                        </label>
+
+
+                        <input asp-for="Input.Password"
+                               class="form-control"
+                               placeholder="Nhập mật khẩu" />
+
+
+                        <span asp-validation-for="Input.Password"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+
+
+                    <div class="mb-4">
+
+                        <label class="fw-bold">
+                            Nhập lại mật khẩu
+                        </label>
+
+
+                        <input asp-for="Input.ConfirmPassword"
+                               class="form-control"
+                               placeholder="Nhập lại mật khẩu" />
+
+
+                        <span asp-validation-for="Input.ConfirmPassword"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+
+                    <button type="submit"
+                            class="btn btn-primary w-100 fw-bold">
+
+                        <i class="bi bi-person-plus"></i>
+
+                        Đăng ký
+
+                    </button>
+
+
+                </form>
+
+
+                <div class="text-center mt-3">
+
+                    <span>
+                        Đã có tài khoản?
+                    </span>
+
+
+                    <a asp-page="./Login">
+                        Đăng nhập
+                    </a>
+
+
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

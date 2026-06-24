@@ -15,5 +15,6 @@ namespace PetFeast.Models.Interfaces
         void Delete(int id);
 
         void Save();
+        IEnumerable<Product> GetBestSellingProducts(int count);
     }
 }

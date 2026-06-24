@@ -1,0 +1,98 @@
+﻿@{
+	Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+
+	<div class="col-md-3">
+
+		<div class="card-box blue">
+
+			<h1>@ViewBag.TotalProducts</h1>
+
+			<h5>Sản phẩm</h5>
+
+		</div>
+
+	</div>
+
+	<div class="col-md-3">
+
+		<div class="card-box green">
+
+			<h1>@ViewBag.TotalCategories</h1>
+
+			<h5>Danh mục</h5>
+
+		</div>
+
+	</div>
+
+	<div class="col-md-3">
+
+		<div class="card-box orange">
+
+			<h1>@ViewBag.TotalOrders</h1>
+
+			<h5>Đơn hàng</h5>
+
+		</div>
+
+	</div>
+
+	<div class="col-md-3">
+
+		<div class="card-box red">
+
+			<h3>@String.Format("{0:N0}", ViewBag.TotalRevenue) đ</h3>
+
+			<h5>Doanh thu</h5>
+
+		</div>
+
+	</div>
+
+</div>
+
+<br />
+
+<div class="card shadow">
+
+	<div class="card-header">
+
+		<h4>Top 5 sản phẩm bán chạy</h4>
+
+	</div>
+
+	<div class="card-body">
+
+		<table class="table">
+
+			<tr>
+
+				<th>Tên sản phẩm</th>
+
+				<th>Giá</th>
+
+				<th>Tồn kho</th>
+
+			</tr>
+
+			@foreach (var item in ViewBag.BestProducts)
+			{
+				<tr>
+
+					<td>@item.ProductName</td>
+
+					<td>@String.Format("{0:N0}", item.Price)</td>
+
+					<td>@item.Quantity</td>
+
+				</tr>
+			}
+
+		</table>
+
+	</div>
+
+</div>

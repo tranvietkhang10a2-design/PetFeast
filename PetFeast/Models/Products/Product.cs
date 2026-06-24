@@ -26,5 +26,18 @@ namespace PetFeast.Models.Products
 
         [ForeignKey("CategoryId")]
         public Category? Category { get; set; }
+        // % Giảm giá
+        public int DiscountPercent { get; set; }
+        // Giá sau khi giảm
+        [NotMapped]
+        public decimal DiscountPrice
+        {
+            get
+            {
+                return Price - (Price * DiscountPercent / 100);
+            }
+        }
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
     }
 }

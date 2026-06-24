@@ -22,7 +22,11 @@
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
 
-
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="icon"
+          type="image/png"
+          href="~/img/Logo/logo1.png">
     <link rel="stylesheet" href="~/css/site.css" />
 
 </head>
@@ -53,7 +57,7 @@
 
 
                 <!-- SEARCH -->
-                <div class="col-lg-6">
+                <div class="col-lg-5">
                     <form asp-controller="Product"
                           asp-action="Index"
                           method="get"
@@ -78,21 +82,12 @@
                 
 
                 <!-- ACCOUNT + CART -->
-                <div class="col-lg-3">
+                <div class="col-lg-4">
 
                     <ul class="navbar-nav flex-row justify-content-end align-items-center w-100">
 
 
-                        <li class="nav-item">
-
-                            <a class="nav-link text-dark btn-login">
-
-                                Login
-
-                            </a>
-
-                        </li>
-
+                        <partial name="_LoginPartial"></partial>
 
                         <li class="nav-item ms-3">
 
@@ -205,7 +200,7 @@
 
                     <a class="nav-link"
                        asp-controller="Home"
-                       asp-action="Promotion">
+                       asp-action="Discount">
 
                         Khuyến mãi
 
@@ -350,16 +345,19 @@
 
                         <div class="social-icons">
 
-                            <a href="#">
-                                <i class="bi bi-facebook"></i>
+                            <a href="https://www.facebook.com/" target="_blank">
+                                <img src="~/img/Social_Icon/facebook.png"
+                                     width="36">
                             </a>
 
-                            <a href="#">
-                                <i class="bi bi-instagram"></i>
+                            <a href="https://www.instagram.com/" target="_blank">
+                                <img src="~/img/Social_Icon/Instagram.png"
+                                     width="36">
                             </a>
 
-                            <a href="#">
-                                <i class="bi bi-tiktok"></i>
+                            <a href="https://www.tiktok.com/" target="_blank">
+                                <img src="~/img/Social_Icon/tiktok.png"
+                                     width="36">
                             </a>
 
                         </div>
@@ -370,11 +368,20 @@
 
                         <h5>Liên hệ</h5>
 
-                        <p>📞 0886 469 752</p>
+                        <p>
+                            <i class="bi bi-telephone-fill"></i>
+                            0886 469 752
+                        </p>
 
-                        <p>✉ petfeast@gmail.com</p>
+                        <p>
+                            <i class="bi bi-envelope-fill"></i>
+                            petfeast@gmail.com
+                        </p>
 
-                        <p>📍 Đà Lạt, Lâm Đồng</p>
+                        <p>
+                            <i class="bi bi-geo-alt-fill"></i>
+                            Đà Lạt, Lâm Đồng
+                        </p>
 
                     </div>
 

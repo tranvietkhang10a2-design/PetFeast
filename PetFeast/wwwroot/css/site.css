@@ -1,4 +1,4 @@
-:root {
+ï»¿:root {
     --primary-color: #0d6efd;
     --primary-dark: #0a58ca;
 }
@@ -34,7 +34,7 @@ body {
         height: 45px;
         font-size: 16px;
     }
-    /* Search button n?u có */
+    /* Search button n?u cÃ³ */
     .header-search button {
         height: 45px;
         padding: 0 25px;
@@ -45,14 +45,17 @@ body {
 /* LOGIN BUTTON */
 /* ===================== */
 
-.btn-login {
+.btn-login,
+.btn-register {
     height: 45px;
-    padding: 0 25px;
+    padding: 0 22px;
     font-size: 16px;
     border-radius: 25px;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
+    white-space: nowrap;
 }
 
 
@@ -66,7 +69,7 @@ body {
 }
 
 
-/* Bootstrap icon n?u dùng */
+/* Bootstrap icon n?u dÃ¹ng */
 
 .bi-cart,
 .bi-cart-fill {
@@ -196,7 +199,7 @@ body {
         flex: 1;
     }
 
-/* Banner chó mèo */
+/* Banner chÃ³ mÃ¨o */
 
 .side-banner {
     width: 100%;
@@ -223,7 +226,7 @@ body {
 }
 
 
-/* Hi?n nút khi hover */
+/* Hi?n nÃºt khi hover */
 
 #heroCarousel .carousel-control-prev,
 #heroCarousel .carousel-control-next {
@@ -364,7 +367,7 @@ body {
         box-shadow: 0 8px 25px rgba(13,110,253,.15);
     }
 
-/* TIÊU ?? SECTION */
+/* TIÃŠU ?? SECTION */
 .section-title,
 h2 {
     color: var(--primary-color);
@@ -458,15 +461,11 @@ h2 {
 /* SOCIAL ICON */
 
 .social-icons a {
-    color: #0d6efd;
-    font-size: 24px;
-    margin-right: 15px;
-    transition: .3s;
+    text-decoration: none !important;
+    font-size: 32px;
+    margin: 0 8px;
 }
 
-    .social-icons a:hover {
-        color: #084298;
-    }
 
 /* COPYRIGHT */
 
@@ -768,3 +767,101 @@ h2 {
         object-fit: cover;
         display: block;
     }
+
+/* SALE PRODUCT */
+
+.sale-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 100%;
+    box-shadow: 0 5px 20px rgba(0,0,0,.1);
+    transition: .3s;
+}
+
+
+    .sale-card:hover {
+        transform: translateY(-8px);
+    }
+
+
+
+.sale-img {
+    position: relative;
+    height: 250px;
+    background: #fff;
+}
+
+
+    .sale-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 15px;
+    }
+
+
+
+.discount-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: #dc3545;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+
+
+.sale-body {
+    padding: 20px;
+}
+
+
+
+    .sale-body h5 {
+        height: 50px;
+        font-weight: 700;
+    }
+
+
+
+.price-box {
+    margin-top: 10px;
+}
+
+
+
+.old-price {
+    display: block;
+    color: #888;
+    text-decoration: line-through;
+    font-size: 15px;
+}
+
+
+
+.new-price {
+    display: block;
+    color: #dc3545;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/*Logo  Login and Register*/
+
+.auth-logo {
+    max-width: 400px !important;
+    max-height: 400px !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain;
+    margin-left: -70px;
+}
+/*Account Icon*/
+.account-icon {
+    font-size: 34px;
+}

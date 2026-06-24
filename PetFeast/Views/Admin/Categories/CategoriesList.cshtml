@@ -1,0 +1,95 @@
+﻿@model IEnumerable<PetFeast.Models.Products.Category>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow mt-4">
+
+    <div class="card-header bg-primary text-white">
+
+        <div class="d-flex justify-content-between">
+
+            <h4>Quản lý danh mục</h4>
+
+            <a asp-action="CreateCategory"
+               class="btn btn-light">
+
+                <i class="bi bi-plus-circle"></i>
+
+                Thêm danh mục
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered table-hover">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Tên danh mục</th>
+
+                    <th width="200"></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.CategoryId</td>
+
+                        <td>@item.CategoryName</td>
+
+                        <td>
+
+                            <div class="action-buttons">
+
+
+                                <a asp-action="EditCategory"
+                                   asp-route-id="@item.CategoryId"
+                                   class="btn btn-warning btn-sm"
+                                   title="Sửa">
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </a>
+
+
+                                <a asp-action="DeleteCategory"
+                                   asp-route-id="@item.CategoryId"
+                                   onclick="return confirm('Xóa danh mục này?')"
+                                   class="btn btn-danger btn-sm"
+                                   title="Xóa">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </a>
+
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
