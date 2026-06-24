@@ -20,6 +20,7 @@
                 <th>Sản phẩm</th>
                 <th>Địa chỉ giao hàng</th>
                 <th>Tổng tiền</th>
+                <th>Trạng thái</th>
             </tr>
 
         </thead>
@@ -69,7 +70,34 @@
                     <td class="fw-bold text-danger">
                         @order.TotalAmount.ToString("N0") đ
                     </td>
+                    <td>
 
+                        @if (order.Status == "Đang giao")
+                        {
+                            <span class="badge bg-primary">
+                                @order.Status
+                            </span>
+                        }
+                        else if (order.Status == "Hoàn thành")
+                        {
+                            <span class="badge bg-success">
+                                @order.Status
+                            </span>
+                        }
+                        else if (order.Status == "Đã hủy")
+                        {
+                            <span class="badge bg-danger">
+                                @order.Status
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">
+                                @order.Status
+                            </span>
+                        }
+
+                    </td>
                 </tr>
 
                 stt++;
