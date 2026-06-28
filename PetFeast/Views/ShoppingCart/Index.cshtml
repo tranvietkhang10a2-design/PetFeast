@@ -1,4 +1,10 @@
-﻿@using PetFeast.Models.ShoppingCart
+﻿@if (TempData["Error"] != null)
+{
+    <div class="alert alert-warning">
+        @TempData["Error"]
+    </div>
+}
+@using PetFeast.Models.ShoppingCart
 @model List<ShoppingCartItem>
 
 <div class="container mt-5">
@@ -50,6 +56,7 @@
                         <th>Giá bán</th>
                         <th>Số lượng</th>
                         <th>Tổng tiền</th>
+                        <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,12 +88,61 @@
                                 @item.Price.ToString("N0") đ
                             </td>
 
-                            <td>
-                                @item.Quantity
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <!-- Giảm -->
+                                    <form asp-controller="ShoppingCart"
+                                          asp-action="DecreaseQuantity"
+                                          method="post">
+
+                                        <input type="hidden"
+                                               name="productId"
+                                               value="@item.ProductId" />
+
+                                        <button class="btn btn-outline-secondary btn-sm">
+
+                                            <i class="bi bi-dash"></i>
+
+                                        </button>
+                                    </form>
+                                    <span class="mx-3 fw-bold">
+                                        @item.Quantity
+                                    </span>
+                                    <!-- Tăng -->
+                                    <form asp-controller="ShoppingCart"
+                                          asp-action="IncreaseQuantity"
+                                          method="post">
+
+                                        <input type="hidden"
+                                               name="productId"
+                                               value="@item.ProductId" />
+
+                                        <button class="btn btn-outline-primary btn-sm">
+
+                                            <i class="bi bi-plus"></i>
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
                             </td>
 
                             <td>
                                 @item.TotalPrice.ToString("N0") đ
+                            </td>
+                            <td class="text-center">
+                                <form asp-controller="ShoppingCart"
+                                      asp-action="RemoveFromCart"
+                                      method="post">
+                                    <input type="hidden"
+                                           name="productId"
+                                           value="@item.ProductId" />
+                                    <button class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+
                             </td>
                         </tr>
                     }

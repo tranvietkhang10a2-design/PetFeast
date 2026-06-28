@@ -107,5 +107,49 @@ namespace PetFeast.Models.Services
 
             SaveCart(cart);
         }
+        public void IncreaseQuantity(int productId)
+        {
+            var cart = GetCart();
+
+            var item = cart.FirstOrDefault(x => x.ProductId == productId);
+
+            if (item != null)
+            {
+                item.Quantity++;
+            }
+
+            SaveCart(cart);
+        }
+        public void DecreaseQuantity(int productId)
+        {
+            var cart = GetCart();
+
+            var item = cart.FirstOrDefault(x => x.ProductId == productId);
+
+            if (item == null)
+                return;
+
+            item.Quantity--;
+
+            if (item.Quantity <= 0)
+            {
+                cart.Remove(item);
+            }
+
+            SaveCart(cart);
+        }
+        public void RemoveFromCart(int productId)
+        {
+            var cart = GetCart();
+
+            var item = cart.FirstOrDefault(x => x.ProductId == productId);
+
+            if (item != null)
+            {
+                cart.Remove(item);
+            }
+
+            SaveCart(cart);
+        }
     }
 }

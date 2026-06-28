@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PetFeast.Models.Interfaces;
+using PetFeast.Models.Services;
 using PetFeast.Models.ShoppingCart;
 
 namespace PetFeast.Controllers
@@ -119,6 +120,49 @@ namespace PetFeast.Controllers
 
             return Ok();
 
+        }
+        [HttpPost]
+        public IActionResult IncreaseQuantity(int productId)
+        {
+            var product = _productRepo.GetById(productId);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var cart = _cartRepo.GetCart();
+
+            var item = cart.FirstOrDefault(x => x.ProductId == productId);
+
+            if (item != null)
+            {
+                if (item.Quantity < product.Quantity)
+                {
+                    _cartRepo.IncreaseQuantity(productId);
+                }
+                else
+                {
+                    TempData["Error"] =
+                        $"Chỉ còn {product.Quantity} sản phẩm trong kho.";
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult DecreaseQuantity(int productId)
+        {
+            _cartRepo.DecreaseQuantity(productId);
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public IActionResult RemoveFromCart(int productId)
+        {
+            _cartRepo.RemoveFromCart(productId);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

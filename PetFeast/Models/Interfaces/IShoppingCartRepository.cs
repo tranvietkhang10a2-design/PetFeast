@@ -13,5 +13,8 @@ namespace PetFeast.Models.Interfaces
 
         void ClearCart();
         void UpdateSelect(int productId, bool isSelected);
+        void IncreaseQuantity(int productId);
+        void DecreaseQuantity(int productId);
+        void RemoveFromCart(int productId);
     }
 }
